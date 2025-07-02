@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 20px 30px;
+      max-width: 500px;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .output {
+      margin-top: 30px;
+      background: #e9ecef;
+      padding: 15px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Job Application</h2>
+  <form id="jobForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required />
+
+    <label for="phone">Phone No:</label>
+    <input type="tel" id="phone" pattern="[0-9]{10}" required />
+
+    <label for="qualification">Qualification:</label>
+    <input type="text" id="qualification" required />
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div class="output" id="output" style="display:none;">
+    <h3>Submitted Data</h3>
+    <p><strong>Name:</strong> <span id="outName"></span></p>
+    <p><strong>Email:</strong> <span id="outEmail"></span></p>
+    <p><strong>Phone:</strong> <span id="outPhone"></span></p>
+    <p><strong>Qualification:</strong> <span id="outQualification"></span></p>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('jobForm');
+  const output = document.getElementById('output');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Get values
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const qualification = document.getElementById('qualification').value.trim();
+
+    // Validation
+    if (!name || !email || !phone || !qualification) {
+      alert("All fields are required!");
+      return;
+    }
+    if (!/^[0-9]{10}$/.test(phone)) {
+      alert("Enter a valid 10-digit phone number");
+      return;
+    }
+
+    // Save to localStorage
+    localStorage.setItem('jobAppData', JSON.stringify({
+      name, email, phone, qualification
+    }));
+
+    // Display
+    document.getElementById('outName').textContent = name;
+    document.getElementById('outEmail').textContent = email;
+    document.getElementById('outPhone').textContent = phone;
+    document.getElementById('outQualification').textContent = qualification;
+    output.style.display = 'block';
+
+    // Clear form
+    form.reset();
+  });
+
+  // Load existing data on page load
+  window.onload = function () {
+    const data = JSON.parse(localStorage.getItem('jobAppData'));
+    if (data) {
+      document.getElementById('outName').textContent = data.name;
+      document.getElementById('outEmail').textContent = data.email;
+      document.getElementById('outPhone').textContent = data.phone;
+      document.getElementById('outQualification').textContent = data.qualification;
+      output.style.display = 'block';
+    }
+  };
+</script>
+
+</body>
+</html>
