@@ -1,0 +1,56 @@
+<template>
+  <div class="slds-card" aria-labelledby="title">
+    <header class="slds-card__header slds-grid">
+      <div class="slds-media slds-media_center slds-has-flexi-truncate">
+        <div class="slds-media__figure">
+          <span class="slds-icon_container slds-icon-utility-calculator" title="BMI">
+            <svg class="slds-icon" aria-hidden="true"><use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#calculator"></use></svg>
+          </span>
+        </div>
+        <div class="slds-media__body">
+          <h2 id="title" class="slds-card__header-title slds-truncate">BMI Calculator</h2>
+        </div>
+      </div>
+    </header>
+
+    <div class="slds-card__body slds-card__body_inner">
+      <div class="slds-grid slds-wrap slds-gutters_small">
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+          <label class="slds-form-element__label">Unit</label>
+          <lightning-radio-group
+            name="unit"
+            options={unitOptions}
+            value={unit}
+            type="radio"
+            onchange={handleUnitChange}>
+          </lightning-radio-group>
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+          <label class="slds-form-element__label" for="weight">Weight ({weightUnitLabel})</label>
+          <input id="weight" class="slds-input" type="number" min="0" step="any" oninput={handleWeightInput} placeholder="e.g., 70" />
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+          <label class="slds-form-element__label" for="height">Height ({heightUnitLabel})</label>
+          <input id="height" class="slds-input" type="number" min="0" step="any" oninput={handleHeightInput} placeholder="e.g., 1.75" />
+        </div>
+      </div>
+
+      <div class="result slds-m-top_medium">
+        <p class="slds-text-heading_small">Result</p>
+        <p class="slds-text-body_regular slds-m-top_x-small">
+          <strong>BMI:</strong> {displayBMI}
+        </p>
+        <p class="slds-text-body_regular">
+          <strong>Category:</strong> {category}
+        </p>
+      </div>
+
+      <div class="slds-m-top_medium">
+        <lightning-button variant="brand" label="Save result" onclick={handleSave} disabled={saveDisabled}></lightning-button>
+        <lightning-button variant="neutral" label="Reset" onclick={handleReset}></lightning-button>
+      </div>
+    </div>
+  </div>
+</template>
