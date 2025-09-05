@@ -1,0 +1,16 @@
+<template>
+  <div class="alarm-clock-root">
+    <c-clock-display time={currentTime}></c-clock-display>
+
+    <div class="set-area">
+      <input type="text" placeholder="Label (optional)" oninput={handleLabel} value={newLabel} />
+
+      <!-- Receive the selected time from the child event -->
+      <c-time-selector ontimeselected={handleTimeSelected}></c-time-selector>
+
+      <button onclick={addAlarm}>Set Alarm</button>
+    </div>
+
+    <c-alarm-list alarms={alarms} ondeletealarm={handleDeleteAlarm}></c-alarm-list>
+  </div>
+</template>
